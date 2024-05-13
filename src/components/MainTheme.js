@@ -19,6 +19,9 @@ const MainTheme = createTheme({
         danger: {
           main: '#FF0000',
         },
+        dark: {
+          main: '#000000'
+        },
       },
 })
 

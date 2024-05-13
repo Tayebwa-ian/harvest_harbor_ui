@@ -1,0 +1,8 @@
+.appButton:hover {
+    background-color: black;
+}
+.verticalLine {
+    width: 2px;
+    height: 100%; /* Adjust height as needed */
+    background-color: black; /* Change color as desired */
+}
