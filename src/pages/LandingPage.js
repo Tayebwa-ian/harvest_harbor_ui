@@ -2,6 +2,7 @@ import { Box, Button, Typography, Grid, List, ListItem, ListItemIcon, ListItemTe
 import agri from "../static/images/agri.jpg"
 import '../static/styles/LandingPage.css'
 import { AddTask, ArrowDownwardOutlined, CompareArrowsOutlined, HandshakeOutlined, MonetizationOnOutlined, SecurityOutlined, ThumbUpOffAlt, TrendingUpOutlined } from "@mui/icons-material";
+import { Link } from "react-router-dom";
 
 function LandingPage() {
     return (
@@ -44,7 +45,15 @@ function LandingPage() {
                 variant="contained"
                 color="dark"
                 >
-                    <b>Got to App</b>
+                    <Link
+                    to='/hubs'
+                    style={{
+                        textDecoration: 'none',
+                        color: 'inherit',
+                    }}
+                    >
+                        <b>Got to App</b>
+                    </Link>
                 </Button>
             </Box> 
             <Typography

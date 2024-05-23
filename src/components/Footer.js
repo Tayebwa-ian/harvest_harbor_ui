@@ -8,7 +8,11 @@ function Footer(){
         display: "flex",
         textAlign: "center",
         color: "white",
-        p: 5}}
+        p: 5,
+        flexDirection: "column",
+        justifyContent: "space-between",
+        height: "35vh"
+        }}
         >
             <Grid container spacing={2}>
                 <Grid item xs={6} md={4} lg={3}>

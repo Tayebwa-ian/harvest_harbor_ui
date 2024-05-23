@@ -49,7 +49,9 @@ export default function Checkout() {
 
   const handleNext = () => {
     handleSubmit();
-    setActiveStep(activeStep + 1);
+    if (activeStep < 2) {
+      setActiveStep(activeStep + 1);
+    }
   };
 
   const handleBack = () => {
