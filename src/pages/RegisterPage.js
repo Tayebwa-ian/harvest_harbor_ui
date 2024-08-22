@@ -4,6 +4,12 @@ import * as React from 'react';
 
 function RegisterPage(){
 
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        const formData = new FormData();
+        console.log(formData);
+    };
+
     return (
         <Container sx={{ width: 650, mt:10, mb: 10, textAlign: "center" }}>
             <Typography
@@ -12,7 +18,7 @@ function RegisterPage(){
             >
                 User Registration
             </Typography>
-            <form>
+            <form onSubmit={handleSubmit}>
                 <Grid container spacing={-8}>
                     <Grid md={12} lg={6}>
                         <TextField 

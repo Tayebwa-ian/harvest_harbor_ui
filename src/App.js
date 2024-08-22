@@ -16,6 +16,7 @@ import HubPage from './pages/HubPage';
 import NotFoundPage from './pages/NotFoundPage';
 import { Grid } from '@mui/material';
 import OrdersPage from './pages/OrdersPage';
+import RegisterHub from './pages/RegisterHub';
 
 function App() {
   return (
@@ -39,6 +40,7 @@ function App() {
                 <Route path='/hubs' element={<HubsPage />} />
                 <Route path='/hub' element={<HubPage />} />
                 <Route path='/orders' element={<OrdersPage />} />
+                <Route path='/hubregisteration' element={<RegisterHub />} />
                 <Route path='*' element={<NotFoundPage />} />
               </Routes>
             </Grid>

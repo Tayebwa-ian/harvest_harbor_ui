@@ -5,22 +5,10 @@ import Typography from '@mui/material/Typography';
 import { Button, CardActionArea, CardActions, Grid, Rating } from '@mui/material';
 import strawberry from '../static/images/strawberry.jpg';
 import { Link } from 'react-router-dom';
+import truncateText from '../utils/TruncateText';
 
 function ProductCard() {
     const description = 'Description of the product being sold';
-
-    const truncateText = (text, maxLength) => {
-        if (text.length <= maxLength) {
-          return text;
-        }
-      
-        const truncatedText = text.substring(0, maxLength);
-        const lastSpaceIndex = truncatedText.lastIndexOf(' '); // Find the last space
-      
-        return lastSpaceIndex !== -1
-          ? truncatedText.substring(0, lastSpaceIndex) + '...'
-          : truncatedText + '...';
-      };
 
     return (
         <Card sx={{ maxWidth: 250 }}>
