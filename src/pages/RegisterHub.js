@@ -23,7 +23,7 @@ function RegisterHub() {
         event.preventDefault();
         setFileName(null);
         setFile(null);
-    }
+    };
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -71,6 +71,7 @@ function RegisterHub() {
                     </Grid>
                     <Grid xs={12} md={12} lg={12}>
                         <TextField
+                        required
                         id="outlined-multiline-static"
                         sx={{ m: 1, width: 600 }}
                         label="Hub Description"
