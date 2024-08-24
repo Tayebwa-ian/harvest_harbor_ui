@@ -6,12 +6,29 @@ import * as React from 'react';
 
 
 function LoginPage(){
+    const [formData, setFormData] = React.useState({
+        email: "",
+        password: ""
+    })
     const [showPassword, setShowPassword] = React.useState(false);
 
     const handleClickShowPassword = () => setShowPassword((show) => !show);
 
     const handleMouseDownPassword = (event) => {
         event.preventDefault();
+    };
+
+    const handleChange = (event) => {
+        const { name, value } = event.target;
+        setFormData({
+            ...formData,
+            [name]: value
+        });
+    };
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        console.log(formData);
     };
 
     return (
@@ -22,13 +39,16 @@ function LoginPage(){
             >
                 Have an account Login here
             </Typography>
-            <form>
+            <Grid>
                 <Grid container>
                     <TextField 
                     required
                     label="email"
                     sx={{ m: 1, width: 300 }}
                     variant="outlined"
+                    name="email"
+                    value={FormData.email}
+                    onChange={handleChange}
                     />
                 </Grid>
                 <Grid container>
@@ -51,6 +71,9 @@ function LoginPage(){
                             }
                             label="Password"
                             required
+                            name="password"
+                            value={FormData.password}
+                            onChange={handleChange}
                         />
                     </FormControl>
                 </Grid>
@@ -58,11 +81,12 @@ function LoginPage(){
                     <Button
                     sx={{ m: 1, width: 300, text: "bold" }}
                     variant="contained"
+                    onClick={handleSubmit}
                     >
                         Login
                     </Button>
                 </Grid>
-            </form>
+            </Grid>
             <Typography
             variant="h7"
             sx={{ mt:4, ml: 2 }}

@@ -1,6 +1,6 @@
 import { Container, Grid, Typography } from "@mui/material";
 import HorizontalHubCard from "../components/HorizontalHubCard";
-import useGet from "../custom_hooks/useGet";
+import useGet from "../CRUD/get";
 
 export default function HubsPage() {
     const {data: hubs, isPending, error} = useGet("http://127.0.0.1:5000/api/core/hubs");

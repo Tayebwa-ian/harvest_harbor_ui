@@ -19,8 +19,33 @@ import OrdersPage from './pages/OrdersPage';
 import RegisterHub from './pages/RegisterHub';
 import ProductUploadPage from './pages/UploadPdt';
 import RegisterCategoryPage from './pages/RegisterCategory';
+import useToken from './utils/UseToken';
 
 function App() {
+
+  const { token, setToken } = useToken();
+
+  if(!token) {
+    return (
+      <ThemeProvider theme={MainTheme}>
+        <Router>
+          <div>
+            <Grid item xs={12}>
+              <Header />
+            </Grid>
+            <Grid item xs={12}>
+              <Routes>
+                <Route path='/login' element={<LoginPage />} />
+                <Route path='/register' element={<RegisterPage />} />
+                <Route path='*' element={<LoginPage />} />
+              </Routes>
+            </Grid>
+          </div>
+        </Router>
+      </ThemeProvider>
+    )
+  }
+
   return (
     <ThemeProvider theme={MainTheme}>
       <Router>
@@ -36,8 +61,6 @@ function App() {
                 <Route path='/products' element={<ProductsPage />} />
                 <Route path='/product' element={<ProductPage />} />
                 <Route path='/cart' element={<CartPage />} />
-                <Route path='/login' element={<LoginPage />} />
-                <Route path='/register' element={<RegisterPage />} />
                 <Route path='/checkout' element={<Checkout />} />
                 <Route path='/hubs' element={<HubsPage />} />
                 <Route path='/hub' element={<HubPage />} />
