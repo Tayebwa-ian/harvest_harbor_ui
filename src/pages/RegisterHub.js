@@ -1,6 +1,8 @@
 import { Container, Grid, TextField, Typography, FormControl, MenuItem, Select, InputLabel, Switch, FormControlLabel, Button } from "@mui/material";
 import * as React from 'react';
 import UploadFile from "../components/UploadFile";
+import postOrUpdate from "../CRUD/postOrUpdate";
+import { useNavigate } from "react-router-dom";
 
 function RegisterHub() {
     const [formData, setFormData] = React.useState({
@@ -8,12 +10,12 @@ function RegisterHub() {
         name: "",
         status: "",
         rank: "",
-        owner_id: "",
         is_bulk_seller: false,
         is_retailer: false
     })
     const [file, setFile] = React.useState(null);
     const [fileName, setFileName] = React.useState(null);
+    const navigate = useNavigate()
 
     const handleFileChange = (event) => {
         const selectedFile = event.target.files[0];
@@ -29,9 +31,13 @@ function RegisterHub() {
         setFile(null);
     };
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
-        console.log(formData);
+        const hub = await postOrUpdate(`http://127.0.0.1:5000/api/core/hubs`, formData);
+        const fileFormData = new formData();
+        fileFormData.append("file", file)
+        const response = await postOrUpdate(`http://127.0.0.1:5000/api/core/${hub.id}/hubimages`, fileFormData);
+        console.log(response);
     };
 
     const handleChange = (event) => {
@@ -59,22 +65,22 @@ function RegisterHub() {
                 Hub Registration
             </Typography>
             <Grid container spacing={-8}>
-                <Grid xs={12} md={12} lg={12}>
+                <Grid item xs={12} md={12} lg={12} sx={{ m:2}}>
                     <TextField 
                     required
                     label="Hub Name"
-                    sx={{ m: 1, width: 600 }}
+                    fullWidth
                     variant="outlined"
                     name="name"
                     value={formData.name}
                     onChange={handleChange}
                     />
                 </Grid>
-                <Grid xs={12} md={12} lg={12}>
+                <Grid item xs={12} md={12} lg={12} sx={{ m:2}}>
                     <TextField
                     required
                     id="outlined-multiline-static"
-                    sx={{ m: 1, width: 600 }}
+                    fullWidth
                     label="Hub Description"
                     multiline
                     rows={5}
@@ -83,24 +89,8 @@ function RegisterHub() {
                     onChange={handleChange}
                     />
                 </Grid>
-                <Grid xs={12} md={12} lg={12} sx={{ m:2}}>
-                    <FormControl fullWidth>
-                        <InputLabel id="demo-simple-select-label">Hub Owner</InputLabel>
-                        <Select
-                        labelId="demo-simple-select-label"
-                        id="demo-simple-select"
-                        label="Owner"
-                        name="owner_id"
-                        value={formData.owner_id}
-                        onChange={handleChange}
-                        >
-                            <MenuItem value="id_1">owner 1</MenuItem>
-                            <MenuItem value="is_2">owner 2</MenuItem>
-                        </Select>
-                    </FormControl>
-                </Grid>
-                <Grid sx={{ mb:2}}>
-                    <FormControl sx={{ m: 1, width: 250 }}>
+                <Grid item sx={{ m:1}}>
+                    <FormControl sx={{ m: 1, width: 240 }}>
                         <InputLabel id="demo-simple-select-label">Status</InputLabel>
                         <Select
                         labelId="demo-simple-select-label"
@@ -116,7 +106,7 @@ function RegisterHub() {
                             <MenuItem value="suspended">suspended</MenuItem>
                         </Select>
                     </FormControl>
-                    <FormControl sx={{ m: 1, width: 250 }}>
+                    <FormControl sx={{ m: 1, width: 240 }}>
                         <InputLabel id="demo-simple-select-label">Rank</InputLabel>
                         <Select
                         labelId="demo-simple-select-label"
@@ -132,7 +122,7 @@ function RegisterHub() {
                         </Select>
                     </FormControl>
                 </Grid>
-                <Grid sx={{ m:2}}>
+                <Grid item sx={{ m:2}}>
                     <FormControlLabel
                     required
                     control={
@@ -156,7 +146,7 @@ function RegisterHub() {
                     label="Is Retailer"
                     />
                 </Grid>
-                <Grid sx={{ m:2}}>
+                <Grid item sx={{ m:2}}>
                     <UploadFile 
                     label="Upload Hub Image"
                     fileName={fileName}
@@ -164,7 +154,7 @@ function RegisterHub() {
                     handleFileDelete={handleFileDelete}
                     />
                 </Grid>
-                <Grid xs={12} sx={{ m:2}}>
+                <Grid item xs={12} sx={{ m:2}}>
                     <Button
                     variant="contained"
                     type="submit"

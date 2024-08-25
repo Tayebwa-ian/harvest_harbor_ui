@@ -52,7 +52,7 @@ function RegisterPage(){
                 User Registration
             </Typography>
             <Grid container spacing={-8}>
-                <Grid md={12} lg={12} sx={{m: 2}}>
+                <Grid item md={12} lg={12} sx={{m: 2}}>
                     <TextField
                     fullWidth
                     required
@@ -63,7 +63,7 @@ function RegisterPage(){
                     onChange={handleChange}
                     />
                 </Grid>
-                <Grid md={12} lg={12} sx={{m: 2}}>
+                <Grid item md={12} lg={12} sx={{m: 2}}>
                     <TextField
                     fullWidth
                     required
@@ -74,7 +74,7 @@ function RegisterPage(){
                     onChange={handleChange}
                     />
                 </Grid>
-                <Grid md={12} lg={12} sx={{m: 2}}>
+                <Grid item md={12} lg={12} sx={{m: 2}}>
                     <TextField
                     fullWidth
                     required
@@ -85,7 +85,7 @@ function RegisterPage(){
                     onChange={handleChange}
                     />
                 </Grid>
-                <Grid md={12} lg={12} sx={{m: 2}}>
+                <Grid item md={12} lg={12} sx={{m: 2}}>
                     <FormControl fullWidth variant="outlined">
                         <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
                         <OutlinedInput
@@ -111,7 +111,7 @@ function RegisterPage(){
                         />
                     </FormControl>
                 </Grid>
-                <Grid md={12} lg={12} sx={{m: 2}}>
+                <Grid item md={12} lg={12} sx={{m: 2}}>
                     <FormControl fullWidth variant="outlined">
                         <InputLabel htmlFor="outlined-adornment-confirm-password">Confirm Password</InputLabel>
                         <OutlinedInput
@@ -137,7 +137,7 @@ function RegisterPage(){
                         />
                     </FormControl>
                 </Grid>
-                <Grid md={12} lg={12} sx={{m: 2}}>
+                <Grid item md={12} lg={12} sx={{m: 2}}>
                     <Button
                     fullWidth
                     variant="contained"

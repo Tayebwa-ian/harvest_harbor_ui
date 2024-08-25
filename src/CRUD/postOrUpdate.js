@@ -1,3 +1,5 @@
+import userToken from "../utils/userToken";
+
 async function postOrUpdate(url, info, reqMethod="POST") {
     let data = null;
     let error = "Request has no errors";
@@ -7,7 +9,7 @@ async function postOrUpdate(url, info, reqMethod="POST") {
       const res = await fetch(url, {
         method: reqMethod, headers: {
           "Content-Type": "application/json",
-          "Authorization": `Bearer ${sessionStorage.getItem('token')}`,
+          "Authorization": `Bearer ${userToken().token}`,
         },
         body: JSON.stringify(info)
       });

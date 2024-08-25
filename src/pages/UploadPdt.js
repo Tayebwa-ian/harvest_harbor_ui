@@ -38,17 +38,17 @@ function ProductUploadPage() {
         });
     };
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
-        const product = postOrUpdate(`http://127.0.0.1:5000/api/core/${formData.hub_id}/products`, formData);
-        console.log(product);
+        const product = await postOrUpdate(`http://127.0.0.1:5000/api/core/${formData.hub_id}/products`, formData);
         const fileFormData = new formData();
         fileFormData.append("file", file)
-        console.log(formData);
+        const response = await postOrUpdate(`http://127.0.0.1:5000/api/core/${product.id}/productimages`, fileFormData);
+        console.log(response);
     };
 
     return(
-        <Container sx={{ width: 650, mt:5, mb: 5, textAlign: "center" }}>
+        <Container sx={{ width: 750, mt:2, mb: 2, textAlign: "center" }}>
             <Typography
             variant="h4"
             sx={{ mb:2, mr:10 }}
@@ -56,22 +56,22 @@ function ProductUploadPage() {
                 Add Product
             </Typography>
             <Grid container spacing={-8}>
-                <Grid xs={12} md={12} lg={12}>
+                <Grid item xs={12} md={12} lg={12} sx={{ m:2}}>
                     <TextField 
                     required
                     label="Product Name"
-                    sx={{ m: 1, width: 600 }}
+                    fullWidth
                     variant="outlined"
                     name="name"
                     value={formData.name}
                     onChange={handleChange}
                     />
                 </Grid>
-                <Grid xs={12} md={12} lg={12}>
+                <Grid item xs={12} md={12} lg={12} sx={{ m:2}}>
                     <TextField
                     required
                     id="outlined-multiline-static"
-                    sx={{ m: 1, width: 600 }}
+                    fullWidth
                     label="Product Description"
                     multiline
                     rows={5}
@@ -80,11 +80,11 @@ function ProductUploadPage() {
                     onChange={handleChange}
                     />
                 </Grid>
-                <Grid xs={12} md={12} lg={12} sx={{ m:2}}>
+                <Grid item xs={12} md={12} lg={12} sx={{ m:2}}>
                     <FormControl fullWidth required>
                         <InputLabel id="demo-simple-select-label">Hub the product belongs to</InputLabel>
                         <Select
-                        sx={{width: 600 }}
+                        fullWidth
                         labelId="demo-simple-select-label"
                         id="demo-simple-select"
                         label="hub"
@@ -97,11 +97,11 @@ function ProductUploadPage() {
                         </Select>
                     </FormControl>
                 </Grid>
-                <Grid xs={12} md={12} lg={12} sx={{ m:2}}>
+                <Grid item xs={12} md={12} lg={12} sx={{ m:2}}>
                     <FormControl fullWidth required>
                         <InputLabel id="demo-simple-select-label">Category</InputLabel>
                         <Select
-                        sx={{width: 600 }}
+                        fullWidth
                         labelId="demo-simple-select-label"
                         id="demo-simple-select"
                         label="category"
@@ -114,35 +114,33 @@ function ProductUploadPage() {
                         </Select>
                     </FormControl>
                 </Grid>
-                <Grid xs={12} md={12} lg={12} sx={{ m:2}}>
+                <Grid item xs={12} md={12} lg={12} sx={{ m:2}}>
                     <TextField 
                     required
                     label="Sell Volume (1kg, Piece, Dozen, Pair, Crate, Box, etc....)"
-                    sx={{width: 600 }}
+                    fullWidth
                     variant="outlined"
                     name="sell_volume"
                     value={formData.sell_volume}
                     onChange={handleChange}
                     />
                 </Grid>
-                <Grid xs={12} md={12} lg={12} sx={{ m:2}}>
+                <Grid item xs={12} md={12} lg={12} sx={{ m:2}}>
                     <TextField
-                    sx={{width: 600 }}
+                    fullWidth
                     label="Avaliable Quantities"
                     type="number"
                     variant="outlined"
-                    fullWidth
                     min={0}
                     name="quantities"
                     value={formData.quantities}
                     onChange={handleChange}
                     />
                 </Grid>
-                <Grid xs={12} md={12} lg={12} sx={{ m:2}} >
+                <Grid item xs={12} md={12} lg={12} sx={{ m:2}} >
                     <FormControl fullWidth required>
                         <InputLabel htmlFor="outlined-adornment-amount">Unit Price</InputLabel>
                         <OutlinedInput
-                        sx={{width: 600 }}
                         type="float"
                         id="outlined-adornment-amount"
                         startAdornment={<InputAdornment position="start">$</InputAdornment>}
@@ -153,7 +151,7 @@ function ProductUploadPage() {
                         />
                     </FormControl>
                 </Grid>
-                <Grid sx={{ m:2}}>
+                <Grid item sx={{ m:2}}>
                     <UploadFile 
                     label="Upload Product Image"
                     fileName={fileName}
@@ -161,7 +159,7 @@ function ProductUploadPage() {
                     handleFileDelete={handleFileDelete}
                     />
                 </Grid>
-                <Grid xs={12} sx={{ m:2}}>
+                <Grid item xs={12} sx={{ m:2}}>
                     <Button
                     variant="contained"
                     type="submit"

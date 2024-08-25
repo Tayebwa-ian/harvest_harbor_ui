@@ -3,6 +3,9 @@ import InputAdornment from '@mui/material/InputAdornment';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import * as React from 'react';
+import postOrUpdate from "../CRUD/postOrUpdate";
+import userToken from "../utils/userToken";
+import { useNavigate } from 'react-router-dom';
 
 
 function LoginPage(){
@@ -11,6 +14,7 @@ function LoginPage(){
         password: ""
     })
     const [showPassword, setShowPassword] = React.useState(false);
+    const navigate = useNavigate();
 
     const handleClickShowPassword = () => setShowPassword((show) => !show);
 
@@ -26,9 +30,13 @@ function LoginPage(){
         });
     };
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
-        console.log(formData);
+        const {data} = await postOrUpdate(`http://127.0.0.1:5000/api/auth/login`, formData);
+        // save the token in the local storage
+        const { setToken } = userToken();
+        setToken(data);
+        navigate("/home");
     };
 
     return (

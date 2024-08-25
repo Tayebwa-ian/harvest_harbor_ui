@@ -31,7 +31,7 @@ function RegisterCategoryPage() {
                 Add Category
             </Typography>
             <Grid container spacing={-8}>
-                <Grid xs={12} md={12} lg={12} sx={{m: 2}}>
+                <Grid item xs={12} md={12} lg={12} sx={{m: 2}}>
                     <TextField 
                     required
                     label="Category Name"
@@ -42,7 +42,7 @@ function RegisterCategoryPage() {
                     onChange={handleChange}
                     />
                 </Grid>
-                <Grid xs={12} md={12} lg={12} sx={{m: 2}}>
+                <Grid item xs={12} md={12} lg={12} sx={{m: 2}}>
                     <TextField
                     required
                     id="outlined-multiline-static"
@@ -55,7 +55,7 @@ function RegisterCategoryPage() {
                     onChange={handleChange}
                     />
                 </Grid>
-                <Grid xs={12} md={12} lg={12} sx={{ m:2}}>
+                <Grid item xs={12} md={12} lg={12} sx={{ m:2}}>
                     <FormControl fullWidth sx={{width: 600 }}>
                         <InputLabel id="demo-simple-select-label">Main category</InputLabel>
                         <Select
@@ -71,7 +71,7 @@ function RegisterCategoryPage() {
                         </Select>
                     </FormControl>
                 </Grid>
-                <Grid xs={12} sx={{ m:2}}>
+                <Grid item xs={12} sx={{ m:2}}>
                     <Button
                     variant="contained"
                     type="submit"

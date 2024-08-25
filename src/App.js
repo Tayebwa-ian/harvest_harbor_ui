@@ -19,11 +19,11 @@ import OrdersPage from './pages/OrdersPage';
 import RegisterHub from './pages/RegisterHub';
 import ProductUploadPage from './pages/UploadPdt';
 import RegisterCategoryPage from './pages/RegisterCategory';
-import useToken from './utils/UseToken';
+import userToken from './utils/userToken';
 
 function App() {
 
-  const { token, setToken } = useToken();
+  const { token } = userToken();
 
   if(!token) {
     return (
@@ -35,6 +35,10 @@ function App() {
             </Grid>
             <Grid item xs={12}>
               <Routes>
+              <Route path='/' element={<LandingPage />} />
+                <Route path='/home' element={<LandingPage />} />
+                <Route path='/products' element={<ProductsPage />} />
+                <Route path='/product' element={<ProductPage />} />
                 <Route path='/login' element={<LoginPage />} />
                 <Route path='/register' element={<RegisterPage />} />
                 <Route path='*' element={<LoginPage />} />
