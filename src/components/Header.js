@@ -12,7 +12,9 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import postOrUpdate from "../CRUD/postOrUpdate";
+import userToken from '../utils/userToken';
 
 const pages = ['Home', 'About', 'Features'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
@@ -20,6 +22,7 @@ const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 function Header() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const navigate = useNavigate();
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -32,8 +35,15 @@ function Header() {
     setAnchorElNav(null);
   };
 
-  const handleCloseUserMenu = () => {
+  const handleCloseUserMenu = async (index) => {
     setAnchorElUser(null);
+    const {token} = userToken();
+    console.log(`clicked on: ${settings[index]}`);
+    if (settings[index] === "Logout" && token) {
+      await postOrUpdate(`http://127.0.0.1:5000/api/auth/logout`);
+      localStorage.removeItem('token');
+      navigate("/login");
+    };
   };
 
   return (
@@ -89,15 +99,16 @@ function Header() {
                 display: { xs: 'block', md: 'none' },
               }}
             >
-              {pages.map((page) => (
+              {pages.map((page, index) => (
                 <Link
                 style={{
                   textDecoration: "none",
                   color: "inherit"
                 }}
                 to={`/${page}`}
+                key={index}
                 >
-                  <MenuItem key={page} onClick={handleCloseNavMenu}>
+                  <MenuItem key={index} onClick={handleCloseNavMenu}>
                     <Typography textAlign="center">{page}</Typography>
                   </MenuItem>
                 </Link>
@@ -124,16 +135,17 @@ function Header() {
             LOGO
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-            {pages.map((page) => (
+            {pages.map((page, index) => (
               <Link
               style={{
                 textDecoration: "none",
                 color: "inherit"
               }}
               to={`/${page}`}
+              key={index}
               >
                 <Button
-                  key={page}
+                  key={index}
                   onClick={handleCloseNavMenu}
                   sx={{ my: 2, color: 'white', display: 'block' }}
                 >
@@ -165,8 +177,8 @@ function Header() {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
+              {settings.map((setting, index) => (
+                <MenuItem key={index} onClick={() => handleCloseUserMenu(index)}>
                   <Typography textAlign="center">{setting}</Typography>
                 </MenuItem>
               ))}

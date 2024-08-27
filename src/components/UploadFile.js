@@ -7,6 +7,7 @@ function UploadFile({ label, fileName, handleFileChange, handleFileDelete }) {
         <Grid>
             <Input
             type="file"
+            name="file"
             onChange={handleFileChange}
             >
             </Input>

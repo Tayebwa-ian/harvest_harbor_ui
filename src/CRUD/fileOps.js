@@ -1,6 +1,6 @@
 import userToken from "../utils/userToken";
 
-async function postOrUpdate(url, info, reqMethod="POST") {
+async function fileOps(url, info, reqMethod="POST") {
     let data = null;
     let error = "Request has no errors";
     let statusCode;
@@ -9,10 +9,9 @@ async function postOrUpdate(url, info, reqMethod="POST") {
       const res = await fetch(url, {
         method: reqMethod,
         headers: {
-          "Content-Type": "application/json",
           "Authorization": `Bearer ${userToken().token}`,
         },
-        body: JSON.stringify(info)
+        body: info
       });
       statusCode = res.status;
       if (!res.ok) { // error coming back from server
@@ -28,4 +27,4 @@ async function postOrUpdate(url, info, reqMethod="POST") {
     return {data, error, statusCode};
 }
 
-export default postOrUpdate;
+export default fileOps;

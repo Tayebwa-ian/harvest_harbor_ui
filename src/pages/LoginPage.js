@@ -1,11 +1,11 @@
-import { Container, TextField, FormControl, InputLabel, OutlinedInput, IconButton, Grid, Button, Typography, Link } from "@mui/material";
+import { Container, TextField, FormControl, InputLabel, OutlinedInput, IconButton, Grid, Button, Typography } from "@mui/material";
 import InputAdornment from '@mui/material/InputAdornment';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import * as React from 'react';
 import postOrUpdate from "../CRUD/postOrUpdate";
 import userToken from "../utils/userToken";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 
 function LoginPage(){
@@ -106,7 +106,7 @@ function LoginPage(){
             variant="h6"
             sx={{ mt:4, ml: 6 }}
             >
-                New User, Register <Link>here</Link>
+                New User, Register <Link to={`/register`}>here</Link>
             </Typography>
         </Container>
     );

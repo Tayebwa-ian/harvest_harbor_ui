@@ -1,4 +1,4 @@
-import { Container, TextField, Grid, Button, Typography, Link, InputLabel, FormControl, IconButton, OutlinedInput } from "@mui/material";
+import { Container, TextField, Grid, Button, Typography, Link, InputLabel, FormControl, IconButton, OutlinedInput, Radio, FormControlLabel, RadioGroup, FormLabel } from "@mui/material";
 import InputAdornment from '@mui/material/InputAdornment';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
@@ -13,10 +13,15 @@ function RegisterPage(){
         password: "",
         phone_number: "",
         username: "",
-        confirm_password: ""
+        confirm_password: "",
+        is_farmer: false,
+        is_admin: false,
+        is_support: false,
+        is_customer: true,
     });
     const [showPassword, setShowPassword] = React.useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = React.useState(false);
+    const [userType, setUserType] = React.useState(null)
 
     const handleClickShowConfirmPassword = () => setShowConfirmPassword((show) => !show)
 
@@ -37,10 +42,16 @@ function RegisterPage(){
     const handleSubmit = async (event) => {
         event.preventDefault();
         delete formData.confirm_password;
+        formData[userType] = true;
         const {data, error, statusCode} = await postOrUpdate(`http://127.0.0.1:5000/api/auth/register`, formData);
         console.log(data);
         console.log(error);
         console.log(statusCode);
+    };
+
+    const handleUserType = (event) => {
+        const value = event.target.value;
+        setUserType(value);
     };
 
     return (
@@ -84,6 +95,43 @@ function RegisterPage(){
                     value={formData.phone_number}
                     onChange={handleChange}
                     />
+                </Grid>
+                <Grid item md={12} lg={12} sx={{m: 2}}>
+                    <FormControl>
+                        <FormLabel id="demo-row-radio-buttons-group-label">What kind of account are you creating</FormLabel>
+                        <RadioGroup
+                            row
+                            aria-labelledby="demo-row-radio-buttons-group-label"
+                            name="userType"
+                            onChange={handleUserType}
+                            value={userType}
+                        >
+                            <FormControlLabel 
+                            control={<Radio
+                                value="is_customer"
+                                />}
+                            label="Customer"
+                            />
+                            <FormControlLabel 
+                            control={<Radio
+                                value="is_farmer"
+                                />}
+                            label="Farmer"
+                            />
+                            <FormControlLabel 
+                            control={<Radio
+                                value="is_support"
+                                />}
+                            label="Support"
+                            />
+                            <FormControlLabel 
+                            control={<Radio
+                                value="is_admin"
+                                />}
+                            label="Admin"
+                            />
+                        </RadioGroup>
+                    </FormControl>
                 </Grid>
                 <Grid item md={12} lg={12} sx={{m: 2}}>
                     <FormControl fullWidth variant="outlined">

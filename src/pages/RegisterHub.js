@@ -3,6 +3,7 @@ import * as React from 'react';
 import UploadFile from "../components/UploadFile";
 import postOrUpdate from "../CRUD/postOrUpdate";
 import { useNavigate } from "react-router-dom";
+import fileOps from "../CRUD/fileOps";
 
 function RegisterHub() {
     const [formData, setFormData] = React.useState({
@@ -11,33 +12,34 @@ function RegisterHub() {
         status: "",
         rank: "",
         is_bulk_seller: false,
-        is_retailer: false
+        is_retailer: false,
     })
-    const [file, setFile] = React.useState(null);
     const [fileName, setFileName] = React.useState(null);
     const navigate = useNavigate()
+    const [image, setImage] = React.useState(null);
 
     const handleFileChange = (event) => {
-        const selectedFile = event.target.files[0];
-        if(selectedFile) {
-            setFile(selectedFile);
-            setFileName(selectedFile.name);
-        }
+        const file = event.target.files[0];    
+        setFileName(file.name);
+        setImage(file);
     };
 
     const handleFileDelete = (event) => {
         event.preventDefault();
         setFileName(null);
-        setFile(null);
+        setImage(null);
     };
 
     const handleSubmit = async (event) => {
         event.preventDefault();
         const hub = await postOrUpdate(`http://127.0.0.1:5000/api/core/hubs`, formData);
-        const fileFormData = new formData();
-        fileFormData.append("file", file)
-        const response = await postOrUpdate(`http://127.0.0.1:5000/api/core/${hub.id}/hubimages`, fileFormData);
-        console.log(response);
+        if (hub.data.id) {
+            const fileForm = new FormData();
+            fileForm.append('image', image);
+            const response = await fileOps(`http://127.0.0.1:5000/api/core/181f21f7-a2e5-4591-924c-9fd611b5280b/hubimages`, fileForm);
+            console.log(response);
+        };
+        navigate("/products");
     };
 
     const handleChange = (event) => {
@@ -100,7 +102,7 @@ function RegisterHub() {
                         value={formData.status}
                         onChange={handleChange}
                         >
-                            <MenuItem value="active">active</MenuItem>
+                            <MenuItem value="atcive">active</MenuItem>
                             <MenuItem value="pending">pending</MenuItem>
                             <MenuItem value="approved">approved</MenuItem>
                             <MenuItem value="suspended">suspended</MenuItem>
@@ -124,7 +126,6 @@ function RegisterHub() {
                 </Grid>
                 <Grid item sx={{ m:2}}>
                     <FormControlLabel
-                    required
                     control={
                         <Switch
                         name="is_bulk_seller"
@@ -135,7 +136,6 @@ function RegisterHub() {
                     label="Is Bulk Seller"
                     />
                     <FormControlLabel
-                    required
                     control={
                         <Switch
                         name="is_retailer"
