@@ -17,7 +17,7 @@ import postOrUpdate from "../CRUD/postOrUpdate";
 import userToken from '../utils/userToken';
 
 const pages = ['Home', 'About', 'Features'];
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+const settings = ['Cart', 'Profile', 'Logout'];
 
 function Header() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -41,8 +41,10 @@ function Header() {
     console.log(`clicked on: ${settings[index]}`);
     if (settings[index] === "Logout" && token) {
       await postOrUpdate(`http://127.0.0.1:5000/api/auth/logout`);
-      localStorage.removeItem('token');
       navigate("/login");
+      localStorage.removeItem('token');
+    } else if (settings[index] === "Cart" && token) {
+      navigate("/cart");
     };
   };
 

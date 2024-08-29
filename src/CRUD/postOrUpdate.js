@@ -14,10 +14,10 @@ async function postOrUpdate(url, info, reqMethod="POST") {
         },
         body: JSON.stringify(info)
       });
-      statusCode = res.status;
+      statusCode = res;
       if (!res.ok) { // error coming back from server
-        console.log(res);
-        throw Error('could not fetch the data for that resource');
+        const error_data = await res.json();
+        throw Error(error_data.message);
       };
       const resp_data = await res.json();
       data = resp_data;

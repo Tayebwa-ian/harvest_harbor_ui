@@ -7,13 +7,13 @@ import strawberry from '../static/images/strawberry.jpg';
 import { Link } from 'react-router-dom';
 import truncateText from '../utils/TruncateText';
 
-function ProductCard() {
-    const description = 'Description of the product being sold';
+function ProductCard({data}) {
+    const description = data.description;
 
     return (
-        <Card sx={{ maxWidth: 250 }}>
+        <Card sx={{ width: 250 }}>
             <Link
-            to='/product'
+            to={`/products/${data.id}`}
             style={{
                 textDecoration: 'none',
                 color: 'inherit',
@@ -29,18 +29,19 @@ function ProductCard() {
                     <CardContent>
                         <Grid container spacing={2}>
                             <Grid item xs={6}>
-                                <Typography gutterBottom variant="h7" component="div">
-                                    <b>Strawberries</b> <br /> <em>sold in Kilo</em>
+                                <Typography gutterBottom variant="h6" component="div">
+                                    <b>{data.name}</b> <br />
                                 </Typography>
+                                <em>sell quantity {data.sell_volume}</em>
                             </Grid>
                             <Grid item xs={6}>
-                                <Typography gutterBottom variant="h4" component="div">
-                                    $20
+                                <Typography gutterBottom variant="h5" component="div">
+                                    ${data.unit_price}
                                 </Typography>
                             </Grid>
                         </Grid>
                         <Typography variant="body2" color="text.secondary">
-                            {truncateText(description, 30)}
+                            {truncateText(description, 30)} see more
                         </Typography>
                         <Rating defaultValue={4.5} precision={0.5} readOnly/>
                     </CardContent>

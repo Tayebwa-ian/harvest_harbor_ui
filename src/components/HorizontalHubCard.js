@@ -8,7 +8,7 @@ import strawberry from '../static/images/strawberry.jpg'
 import { Grid, Rating } from '@mui/material';
 import { Link } from 'react-router-dom';
 
-export default function HorizontalHubCard() {
+export default function HorizontalHubCard({data, key}) {
 
   return (
     <Link
@@ -21,7 +21,8 @@ export default function HorizontalHubCard() {
         borderRadius: '8px',
         mb: 4,
     }}
-    to='/hub'
+    to={`/hubs/${data.id}`}
+    key={key}
     >
         <Card sx={{ display: 'flex' }}>
             <Grid container spacing={2}>
@@ -36,14 +37,16 @@ export default function HorizontalHubCard() {
                     <Box sx={{ display: 'flex', flexDirection: 'column' }}>
                         <CardContent sx={{ flex: '1 0 auto' }}>
                         <Typography component="div" variant="h5">
-                            <b>Hakimi Hub</b>
+                            <b>{data.name}</b>
                         </Typography>
                         <Typography variant="subtitle1" component="div">
-                            Since: 11/02/2022<br/>
+                            Since: {data.created_at}<br/>
                             <em>Location: Wandegeya, City Mall, Kampala</em>
                         </Typography>
                         <br/>
                         <Typography variant="subtitle1" component="div">
+                            <em>Status: {data.rank}</em>
+                            <br />
                             <b>Rating</b>
                         </Typography>
                         <Rating readOnly />

@@ -4,9 +4,6 @@ import useGet from "../CRUD/get";
 
 export default function HubsPage() {
     const {data: hubs, isPending, error} = useGet("http://127.0.0.1:5000/api/core/hubs");
-    console.log(hubs);
-    console.log(isPending);
-    console.log(error);
     return (
         <Container
         sx={{
@@ -14,6 +11,7 @@ export default function HubsPage() {
             mt: 5,
         }}
         >
+            { hubs &&
             <Grid container>
                 <Grid item md={2}>
                     <Typography>
@@ -21,12 +19,14 @@ export default function HubsPage() {
                     </Typography>
                 </Grid>
                 <Grid item xs={12} md={10}>
-                    <HorizontalHubCard />
-                    <HorizontalHubCard />
-                    <HorizontalHubCard />
-                    <HorizontalHubCard />
+                    { hubs.map((hub, index) => (
+                        <HorizontalHubCard key={index} data={hub} />
+                    ))}
                 </Grid>
             </Grid>
+            }
+            { isPending && <p>Loading............</p>}
+            { error && <p>{error}</p>}
         </Container>
     );
 }

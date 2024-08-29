@@ -2,10 +2,12 @@ import { Container, Grid, TextField, Typography, FormControl, Select, InputLabel
 import * as React from 'react';
 import UploadFile from "../components/UploadFile";
 import postOrUpdate from "../CRUD/postOrUpdate";
+import fileOps from "../CRUD/fileOps";
+import { useParams } from "react-router-dom";
+import useGet from "../CRUD/get";
 
 function ProductUploadPage() {
     const [formData, setFormData] = React.useState({
-        hub_id: "",
         cat_id: "",
         name: "",
         description: "",
@@ -15,6 +17,8 @@ function ProductUploadPage() {
     })
     const [file, setFile] = React.useState(null);
     const [fileName, setFileName] = React.useState(null);
+    const {hub_id} = useParams();
+    const {data:categories, error, isPending} = useGet("http://127.0.0.1:5000/api/core/categories");
 
     const handleFileChange = (event) => {
         const selectedFile = event.target.files[0];
@@ -40,11 +44,13 @@ function ProductUploadPage() {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        const product = await postOrUpdate(`http://127.0.0.1:5000/api/core/${formData.hub_id}/products`, formData);
-        const fileFormData = new formData();
-        fileFormData.append("file", file)
-        const response = await postOrUpdate(`http://127.0.0.1:5000/api/core/${product.id}/productimages`, fileFormData);
-        console.log(response);
+        const product = await postOrUpdate(`http://127.0.0.1:5000/api/core/${hub_id}/products`, formData);
+        if (product.data.id && file) {
+            const fileFormData = new FormData();
+            fileFormData.append("image", file)
+            const response = await fileOps(`http://127.0.0.1:5000/api/core/${product.data.id}/productimages`, fileFormData);
+            console.log(response);
+        }
     };
 
     return(
@@ -55,6 +61,7 @@ function ProductUploadPage() {
             >
                 Add Product
             </Typography>
+            {categories &&
             <Grid container spacing={-8}>
                 <Grid item xs={12} md={12} lg={12} sx={{ m:2}}>
                     <TextField 
@@ -82,23 +89,6 @@ function ProductUploadPage() {
                 </Grid>
                 <Grid item xs={12} md={12} lg={12} sx={{ m:2}}>
                     <FormControl fullWidth required>
-                        <InputLabel id="demo-simple-select-label">Hub the product belongs to</InputLabel>
-                        <Select
-                        fullWidth
-                        labelId="demo-simple-select-label"
-                        id="demo-simple-select"
-                        label="hub"
-                        name="hub_id"
-                        value={formData.hub_id}
-                        onChange={handleChange}
-                        >
-                            <MenuItem value="hub_1">Hub 1</MenuItem>
-                            <MenuItem value="hub_2">Hub 2</MenuItem>
-                        </Select>
-                    </FormControl>
-                </Grid>
-                <Grid item xs={12} md={12} lg={12} sx={{ m:2}}>
-                    <FormControl fullWidth required>
                         <InputLabel id="demo-simple-select-label">Category</InputLabel>
                         <Select
                         fullWidth
@@ -109,8 +99,9 @@ function ProductUploadPage() {
                         value={formData.cat_id}
                         onChange={handleChange}
                         >
-                            <MenuItem value="cat_1">Category 1</MenuItem>
-                            <MenuItem value="cat_2">Category 2</MenuItem>
+                            {categories.map((cat, index) => (
+                                <MenuItem key={index} value={cat.id}>{cat.name}</MenuItem>
+                            ))}
                         </Select>
                     </FormControl>
                 </Grid>
@@ -131,7 +122,7 @@ function ProductUploadPage() {
                     label="Avaliable Quantities"
                     type="number"
                     variant="outlined"
-                    min={0}
+                    InputProps={{ inputProps: { min: 1 } }}
                     name="quantities"
                     value={formData.quantities}
                     onChange={handleChange}
@@ -169,6 +160,9 @@ function ProductUploadPage() {
                     </Button>
                 </Grid>
             </Grid>
+            }
+            { isPending && <p>Loading............</p>}
+            { error && <p>{error}</p>}
         </Container>
     );
 };

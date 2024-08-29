@@ -33,13 +33,13 @@ function RegisterHub() {
     const handleSubmit = async (event) => {
         event.preventDefault();
         const hub = await postOrUpdate(`http://127.0.0.1:5000/api/core/hubs`, formData);
-        if (hub.data.id) {
+        if (hub.data.id && image) {
             const fileForm = new FormData();
             fileForm.append('image', image);
             const response = await fileOps(`http://127.0.0.1:5000/api/core/181f21f7-a2e5-4591-924c-9fd611b5280b/hubimages`, fileForm);
             console.log(response);
         };
-        navigate("/products");
+        navigate("/hub");
     };
 
     const handleChange = (event) => {

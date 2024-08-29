@@ -6,7 +6,7 @@ import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
 import ProductReview from './ProductReview';
 
-export default function NavTab() {
+export default function NavTab({data}) {
   const [value, setValue] = React.useState('1');
 
   const handleChange = (event, newValue) => {
@@ -24,9 +24,7 @@ export default function NavTab() {
           </TabList>
         </Box>
         <TabPanel value="1">
-            The strawberry is a sweet, juicy, and vibrantly colored fruit that is enjoyed by people all over the world. 
-            It's not actually a berry, but rather a false fruit, which means the fleshy part that we eat develops from 
-            the receptacle that holds the flower, not from the ovary of the flower itself.
+            {data.description}
         </TabPanel>
         <TabPanel value="2">Item Two</TabPanel>
         <TabPanel value="3">

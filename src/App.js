@@ -37,8 +37,10 @@ function App() {
               <Routes>
               <Route path='/' element={<LandingPage />} />
                 <Route path='/home' element={<LandingPage />} />
+                <Route path='/hubs' element={<HubsPage />} />
+                <Route path='/hubs/:hub_id' element={<HubPage />} />
                 <Route path='/products' element={<ProductsPage />} />
-                <Route path='/product' element={<ProductPage />} />
+                <Route path='/products/:product_id' element={<ProductPage />} />
                 <Route path='/login' element={<LoginPage />} />
                 <Route path='/register' element={<RegisterPage />} />
                 <Route path='*' element={<LoginPage />} />
@@ -62,15 +64,16 @@ function App() {
               <Routes>
                 <Route path='/' element={<LandingPage />} />
                 <Route path='/home' element={<LandingPage />} />
+                <Route path='/login' element={<LoginPage />} />
                 <Route path='/products' element={<ProductsPage />} />
-                <Route path='/product' element={<ProductPage />} />
+                <Route path='/products/:product_id' element={<ProductPage />} />
                 <Route path='/cart' element={<CartPage />} />
                 <Route path='/checkout' element={<Checkout />} />
                 <Route path='/hubs' element={<HubsPage />} />
-                <Route path='/hub' element={<HubPage />} />
+                <Route path='/hubs/:hub_id' element={<HubPage />} />
                 <Route path='/orders' element={<OrdersPage />} />
                 <Route path='/hubregisteration' element={<RegisterHub />} />
-                <Route path='/addproduct' element={<ProductUploadPage />} />
+                <Route path='/:hub_id/addproduct' element={<ProductUploadPage />} />
                 <Route path='/addcategory' element={<RegisterCategoryPage />} />
                 <Route path='*' element={<NotFoundPage />} />
               </Routes>
